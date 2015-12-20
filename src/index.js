@@ -4,10 +4,11 @@
 
 import React, {
   AppRegistry,
+  View,
 } from 'react-native';
 
 class App extends React.Component {
-  render(){
+  render() {
     return (
       <View />
     );
