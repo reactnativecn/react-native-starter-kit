@@ -4,7 +4,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // Action types;
-export const INITIAL_OVER = '@@app/session/initial_over';
+export const INITIAL_OVER = 'app/session/initial_over';
 
 // Initial state
 const initialState = null;
