@@ -26,7 +26,7 @@ class App extends React.Component {
     }
   }
   onBackAndroid = () => {
-    const nav = this.refs.navigator;
+    const nav = this.navigator;
     const routers = nav.getCurrentRoutes();
     if (routers.length > 1) {
       nav.pop();
