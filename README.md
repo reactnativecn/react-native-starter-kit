@@ -7,7 +7,7 @@ React Native Starter Kit [![Build Status](https://travis-ci.org/reactnativecn/re
 
 运行`npm install` 安装所有依赖。
 
-_暂时需要手动删除`node_modules/react-actions/.babelrc`文件_
+_暂时需要手动删除`node_modules/redux-actions/.babelrc`文件_
 
 _暂时需要手动删除`node_modules/flux-standard-action/.babelrc`文件_
 
