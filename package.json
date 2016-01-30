@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "test": "node node_modules/eslint/bin/eslint .",
-    "start": "react-native start"
+    "start": "react-native start",
+    "clean:babelrc": "find ./node_modules -name react-packager -prune -o -name '.babelrc' -print | xargs rm -f",
+    "postinstall": "npm run clean:babelrc"
   },
   "dependencies": {
     "react": "^0.14.3",
