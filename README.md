@@ -6,6 +6,12 @@ React Native Starter Kit [![Build Status](https://travis-ci.org/reactnativecn/re
 点击`Download ZIP`下载压缩包，并在自己工程下解压（建议解压到新git repo的根目录）。
 
 运行`npm install` 安装所有依赖。
+
+_可能需要手动删除以下文件_：  
+
+`node_modules/redux-actions/.babelrc`  
+`node_modules/flux-standard-action/.babelrc`  
+`node_modules/reduce-reducers/.babelrc`
  
 ## 语法规范说明
 
