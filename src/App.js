@@ -1,0 +1,104 @@
+/**
+ * Created by tdzl2003 on 12/17/16.
+ */
+import React, { Component } from 'react';
+import {
+  BackAndroid,
+  AppState,
+  StyleSheet,
+  View,
+  Navigator,
+  ToastAndroid,
+} from 'react-native';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
+import { observer } from 'mobx-react/native';
+import { SubscribeDOM } from 'react-subscribe';
+import { configureScene } from './SceneConfig';
+import routeConfig from './pages';
+import NavigatorProvider from './utils/NavigatorProvider';
+import RouterContainer from './utils/RouterContainer';
+
+const INITIAL_ROUTE = {
+  location: '/splash',
+};
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+});
+
+@observer
+export default class App extends Component {
+  lastBackPressed = 0;
+  lastAppState = 'active';
+  onHardwareBackPress = () => {
+    const nav = this.navigator;
+    const routers = nav.getCurrentRoutes();
+
+    if (routers.length > 1) {
+      // 当按下back键时回退到上一页面
+      nav.pop();
+      return true;
+    }
+    const now = Date.now();
+    if (now - this.lastBackPressed < 1500) {
+      BackAndroid.exitApp();
+    } else {
+      this.lastBackPressed = now;
+      ToastAndroid.show('再按一次返回键退出本应用', 1000);
+    }
+
+    return true;
+  };
+  onAppStateChange = (state) => {
+    if (state === 'active' && this.lastAppState !== 'active') {
+      dismissKeyboard();
+    }
+    this.lastAppState = state;
+  };
+  onWillFocus = () => {
+    dismissKeyboard();
+  };
+  renderScene = ({ location, passProps, component: Comp } = {}, navigator) => {
+    if (location) {
+      // 通过location渲染页面
+      return (
+        <NavigatorProvider navigator={navigator}>
+          <RouterContainer
+            routeConfig={routeConfig}
+            app={this.app}
+            passProps={passProps}
+            location={location}
+          />
+        </NavigatorProvider>
+      );
+    } else if (Comp) {
+      // 通过component渲染页面,用于Dialog等场景
+      return (
+        <NavigatorProvider navigator={navigator}>
+          <Comp {...passProps} app={this.app}/>
+        </NavigatorProvider>
+      );
+    }
+    return null;
+  };
+  render() {
+    return (
+      <View style={styles.root}>
+        <SubscribeDOM target={AppState} eventName="change" listener={this.onAppStateChange} />
+        {__ANDROID__ && <SubscribeDOM target={BackAndroid} eventName="hardwareBackPress" listener={this.onHardwareBackPress} />}
+        <Navigator
+          configureScene={configureScene}
+          onWillFocus={this.onWillFocus}
+          initialRoute={INITIAL_ROUTE}
+          renderScene={this.renderScene}
+          ref={(ref) => {
+            this.navigator = ref;
+          }}
+        />
+      </View>
+    );
+  }
+}
