@@ -12,11 +12,12 @@ import {
 } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import { observer } from 'mobx-react/native';
-import { SubscribeDOM } from 'react-subscribe';
+import { Subscribe, SubscribeDOM } from 'react-subscribe';
 import { configureScene } from './SceneConfig';
 import routeConfig from './pages';
 import NavigatorProvider from './utils/NavigatorProvider';
 import RouterContainer from './utils/RouterContainer';
+import RPC from './logics/rpc';
 
 const INITIAL_ROUTE = {
   location: '/splash',
@@ -61,6 +62,14 @@ export default class App extends Component {
   onWillFocus = () => {
     dismissKeyboard();
   };
+  onInvalidToken = () => {
+    const { navigator } = this;
+    if (navigator) {
+      navigator.immediatelyResetRouteStack([{
+        location: '/auth/login',
+      }]);
+    }
+  };
   renderScene = ({ location, passProps, component: Comp } = {}, navigator) => {
     if (location) {
       // 通过location渲染页面
@@ -88,6 +97,7 @@ export default class App extends Component {
       <View style={styles.root}>
         <SubscribeDOM target={AppState} eventName="change" listener={this.onAppStateChange} />
         {__ANDROID__ && <SubscribeDOM target={BackAndroid} eventName="hardwareBackPress" listener={this.onHardwareBackPress} />}
+        <Subscribe target={RPC} eventName="invalidToken" listener={this.onInvalidToken} />
         <Navigator
           configureScene={configureScene}
           onWillFocus={this.onWillFocus}

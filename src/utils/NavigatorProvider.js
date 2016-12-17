@@ -11,10 +11,10 @@ import {
 export default class NavigatorProvider extends React.Component {
   static propTypes = {
     navigator: PropTypes.instanceOf(Navigator),
-    children: PropTypes.oneOf(
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element,
-    ),
+    ]),
   }
   static childContextTypes = {
     navigator: PropTypes.instanceOf(Navigator),

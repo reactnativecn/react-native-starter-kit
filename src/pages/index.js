@@ -3,9 +3,12 @@
  */
 import Splash from './Splash';
 
+import auth from './auth';
+
 export default {
   path: '/',
   childRoutes: [
     Splash,
+    auth,
   ].map(v => v.routeConfig || v),
 };

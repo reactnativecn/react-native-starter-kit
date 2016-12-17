@@ -2,14 +2,14 @@
  * Created by tdzl2003 on 12/18/16.
  */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   StyleSheet,
   View,
   Text,
 } from 'react-native';
 import router from '../utils/routerDecorator';
-import LinkContainer from '../utils/LinkContainer';
+import { loadToken } from '../logics/rpc';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,13 +22,21 @@ const styles = StyleSheet.create({
 
 @router('splash')
 export default class Splash extends Component {
+  static contextTypes = {
+    navigator: PropTypes.object,
+  };
+  async componentWillMount() {
+    const { navigator } = this.context;
+    if (await loadToken()) {
+      navigator.replace({ location: '/home/index' });
+    } else {
+      navigator.replace({ location: '/auth/login' });
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
         <Text>This is splash page</Text>
-        <LinkContainer to="/login">
-          <Text onPress={this.go}>Click me to continue</Text>
-        </LinkContainer>
       </View>
     );
   }
