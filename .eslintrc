@@ -8,10 +8,13 @@
   },
   "rules": {
     // Don't need this for react-native app.
+    "no-console": 0,
     "no-alert": 0,
 
     // Disable this because it breaks mobx with state-less component.
     "prefer-arrow-callback": 0,
+
+    "react/prefer-stateless-function": 0,
 
     // Move properties before.
     "react/sort-comp": [2, {

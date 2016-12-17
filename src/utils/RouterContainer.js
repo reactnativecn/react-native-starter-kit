@@ -23,17 +23,16 @@ export default class RouterContainer extends React.Component {
   getChildContext() {
     return {
       location: this.props.location,
-      app: this
     };
   }
 
-  createElement(component, props) {
+  createElement = (component, props) => {
     const { passProps } = this.props;
     return React.createElement(component, {
       ...props,
       ...passProps,
     });
-  }
+  };
 
   render() {
     const { location, routeConfig } = this.props;
@@ -41,6 +40,7 @@ export default class RouterContainer extends React.Component {
     console.log('Current location:', location);
 
     let props;
+    let debugWarn = true;
     match({
       location,
       routes: routeConfig,
@@ -50,9 +50,15 @@ export default class RouterContainer extends React.Component {
       } else {
         props = renderProps;
       }
+      if (__DEV__) {
+        debugWarn = false;
+      }
     });
-    if (!props) {
+    if (__DEV__ && debugWarn) {
       console.warn('Async router is not supported by react-native');
+    }
+    if (!props) {
+      return null;
     }
 
     return <RouterContext {...props} createElement={this.createElement} />;

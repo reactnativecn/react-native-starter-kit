@@ -68,7 +68,6 @@ export default class App extends Component {
         <NavigatorProvider navigator={navigator}>
           <RouterContainer
             routeConfig={routeConfig}
-            app={this.app}
             passProps={passProps}
             location={location}
           />
@@ -78,7 +77,7 @@ export default class App extends Component {
       // 通过component渲染页面,用于Dialog等场景
       return (
         <NavigatorProvider navigator={navigator}>
-          <Comp {...passProps} app={this.app}/>
+          <Comp {...passProps} />
         </NavigatorProvider>
       );
     }
