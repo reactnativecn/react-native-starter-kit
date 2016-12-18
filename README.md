@@ -9,7 +9,7 @@ React Native Starter Kit [![Build Status](https://travis-ci.org/reactnativecn/re
 
 ## V3 更新说明
 
-1. 最重要的: 使用了[mobx](https://mobx.github.io/mobx/),取代之前的redux或emitter + subscribe方案。subscribe仍在少数地方使用。
+1. 最重要的: 使用了[mobx](https://mobxjs.github.io/mobx/),取代之前的redux或emitter + subscribe方案。subscribe仍在少数地方使用。
 2. 增加了在route或component中指定sceneConfig的用法,这样你就不必每次都在route里指定sceneConfig。
 3. form不再使用单独的组件,改为mobx实现。
 4. 将一些整块功能挪到了单独的包中,如react-subscribe, mobx-form-validation,以便于bug修复和更新。
