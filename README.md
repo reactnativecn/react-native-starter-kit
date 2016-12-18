@@ -86,13 +86,13 @@ export const routeConfig = {
 
 ## 事件订阅
 
-请参考[react-subscribe](https://npmjs.com/react-subscribe)的文档和示例代码。
+请参考[react-subscribe](https://www.npmjs.com/package/react-subscribe)的文档和示例代码。
 
 现在只应该用事件订阅去订阅系统事件等内容,逻辑层应尽可能使用mobx绑定。但少数需要的时刻(如token失效后返回登录页) 依然可以使用Subscribe.
 
 ## 表单
 
-请参考[mobx-form-validate](https://npmjs.com/mobx-form-validate)的文档和示例代码。
+请参考[mobx-form-validate](https://www.npmjs.com/package/mobx-form-validate)的文档和示例代码。
 
 ## 样式-主题
 
