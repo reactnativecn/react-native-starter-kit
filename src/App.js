@@ -13,11 +13,12 @@ import {
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import { observer } from 'mobx-react/native';
 import { Subscribe, SubscribeDOM } from 'react-subscribe';
-import { configureScene } from './SceneConfig';
 import routeConfig from './pages';
 import NavigatorProvider from './utils/NavigatorProvider';
 import RouterContainer from './utils/RouterContainer';
 import RPC from './logics/rpc';
+import hookNavigator from './utils/hookNavigator';
+import { configureScene } from './SceneConfig';
 
 const INITIAL_ROUTE = {
   location: '/home/home',
@@ -29,6 +30,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 });
+
+function configureSceneWithRoute(route) {
+  return configureScene(routeConfig, route);
+}
 
 @observer
 export default class App extends Component {
@@ -99,12 +104,13 @@ export default class App extends Component {
         {__ANDROID__ && <SubscribeDOM target={BackAndroid} eventName="hardwareBackPress" listener={this.onHardwareBackPress} />}
         <Subscribe target={RPC} eventName="invalidToken" listener={this.onInvalidToken} />
         <Navigator
-          configureScene={configureScene}
+          configureScene={configureSceneWithRoute}
           onWillFocus={this.onWillFocus}
           initialRoute={INITIAL_ROUTE}
           renderScene={this.renderScene}
           ref={(ref) => {
             this.navigator = ref;
+            hookNavigator(ref);
           }}
         />
       </View>

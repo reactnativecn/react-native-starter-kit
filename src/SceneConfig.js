@@ -6,12 +6,37 @@ import {
   Navigator,
 } from 'react-native';
 import { match } from 'react-router';
-
-import routeConfig from './pages';
+import buildStyleInterpolator from 'react-native/Libraries/Utilities/buildStyleInterpolator';
 
 export const DefaultSceneConfig = Navigator.SceneConfigs.PushFromRight;
 
-export function configureScene({ sceneConfig, location, component }) {
+const FadeOutHalf = {
+  opacity: {
+    from: 1,
+    to: 0.3,
+    min: 0,
+    max: 0.5,
+    type: 'linear',
+    extrapolate: false,
+    round: 100,
+  },
+};
+
+export const FadeModal = {
+  ...Navigator.SceneConfigs.FadeAndroid,
+  isModal: true,
+  animationInterpolators: {
+    ...Navigator.SceneConfigs.FadeAndroid.animationInterpolators,
+    out: buildStyleInterpolator(FadeOutHalf),
+  },
+};
+
+export const BottomModal = {
+  ...Navigator.SceneConfigs.FloatFromBottom,
+  isModal: true,
+};
+
+export function configureScene(routeConfig, { sceneConfig, location, component }) {
   if (sceneConfig) {
     return sceneConfig;
   }
