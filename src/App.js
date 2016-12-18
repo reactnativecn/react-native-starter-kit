@@ -21,7 +21,7 @@ import hookNavigator from './utils/hookNavigator';
 import { configureScene } from './SceneConfig';
 
 const INITIAL_ROUTE = {
-  location: '/home/home',
+  location: '/splash',
 };
 
 const styles = StyleSheet.create({
