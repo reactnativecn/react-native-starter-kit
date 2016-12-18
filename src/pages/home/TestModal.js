@@ -38,9 +38,11 @@ export default class TestModal extends Component {
     return (
       <TouchableWithoutFeedback onPress={this.dismiss}>
         <View style={styles.background}>
-          <View style={styles.content}>
-            <Text>Hello, modal</Text>
-          </View>
+          <TouchableWithoutFeedback>
+            <View style={styles.content}>
+              <Text>Hello, modal</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     );
