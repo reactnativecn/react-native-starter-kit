@@ -22,7 +22,7 @@ export class LoginForm {
         user: this.user,
         pwd: md5b64(this.pwd),
       });
-      
+
     }
     return 1;
   }

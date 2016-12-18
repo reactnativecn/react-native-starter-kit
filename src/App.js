@@ -20,7 +20,7 @@ import RouterContainer from './utils/RouterContainer';
 import RPC from './logics/rpc';
 
 const INITIAL_ROUTE = {
-  location: '/splash',
+  location: '/home/home',
 };
 
 const styles = StyleSheet.create({

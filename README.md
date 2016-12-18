@@ -123,3 +123,7 @@ export const routeConfig = {
 最后在视图层捕获错误并决定对应的显示。
 
 严禁直接在逻辑层弹出Alert或Toast。
+
+## TabBar的实现
+
+TabBar采用react-router直接实现,不依赖第三方组件。

@@ -28,7 +28,7 @@ export default class Login extends Component {
   onSubmit = async () => {
     try {
       await this.form.submit();
-      this.context.navigator.replace('/home/index');
+      this.context.navigator.replace('/home/home');
     } catch (err) {
       switch (err.code) {
         case 403:

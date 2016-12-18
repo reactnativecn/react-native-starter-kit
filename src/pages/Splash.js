@@ -28,7 +28,7 @@ export default class Splash extends Component {
   async componentWillMount() {
     const { navigator } = this.context;
     if (await loadToken()) {
-      navigator.replace({ location: '/home/index' });
+      navigator.replace({ location: '/home/home' });
     } else {
       navigator.replace({ location: '/auth/login' });
     }
