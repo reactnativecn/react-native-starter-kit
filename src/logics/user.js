@@ -9,7 +9,7 @@ import { post } from './rpc';
 
 export class LoginForm {
   @observable
-  @validate(/^1\d{10}$/, '请输入手机号')
+  @validate(/^1\d{10}$/, '请输入正确的手机号')
   mobile = '';
 
   @observable
@@ -18,10 +18,11 @@ export class LoginForm {
 
   async submit() {
     if (false) {
-      await post('/login', {
+      const { token, uid } = await post('/login', {
         user: this.user,
         pwd: md5b64(this.pwd),
       });
+      
     }
     return 1;
   }
@@ -29,7 +30,7 @@ export class LoginForm {
 
 export class RegisterForm {
   @observable
-  @validate(/^1\d{10}$/, '请输入手机号')
+  @validate(/^1\d{10}$/, '请输入正确的手机号')
   mobile = '';
 
   @observable

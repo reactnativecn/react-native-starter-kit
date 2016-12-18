@@ -11,9 +11,15 @@
     "no-console": 0,
     "no-alert": 0,
 
+    // Make destructure available:
+    "no-unused-vars": ["error", {
+      "vars": "local",
+      "args": "after-used",
+      "varsIgnorePattern": "_"
+    }],
+
     // Disable this because it breaks mobx with state-less component.
     "prefer-arrow-callback": 0,
-
     "react/prefer-stateless-function": 0,
 
     // Move properties before.

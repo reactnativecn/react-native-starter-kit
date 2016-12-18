@@ -54,7 +54,7 @@ export default {
   path: 'user',
   childRoutes: [
     Login,
-  ].map(v => v.routeConfig || ),
+  ].map(v => v.routeConfig || v),
 };
 ```
 
@@ -115,3 +115,11 @@ export const routeConfig = {
 * 使用Navigator来实现对话框。
 
 * 对话框类均应包含正确的sceneConfig静态成员。
+
+## 异步错误捕获
+
+异步请求在逻辑层处理过程应尽可能保证信息无丢失,错误体应被透传至最外层而不经任何修改。
+
+最后在视图层捕获错误并决定对应的显示。
+
+严禁直接在逻辑层弹出Alert或Toast。
