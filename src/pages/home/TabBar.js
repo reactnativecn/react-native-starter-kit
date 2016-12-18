@@ -70,7 +70,7 @@ export default class TabBar extends Component {
 
 TabBar.propTypes = {
   children: PropTypes.element,
-  router: PropTypes.shapeOf({
+  router: PropTypes.shape({
     isActive: PropTypes.func,
   }),
 };
