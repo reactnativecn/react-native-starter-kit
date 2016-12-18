@@ -23,8 +23,7 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: 'white',
   },
-})
-
+});
 
 export default class TestModal extends Component {
   static sceneConfig = FadeModal;
@@ -45,5 +44,5 @@ export default class TestModal extends Component {
         </View>
       </TouchableWithoutFeedback>
     );
-  };
+  }
 }

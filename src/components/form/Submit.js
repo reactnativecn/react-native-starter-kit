@@ -30,7 +30,7 @@ export default class Submit extends Component {
   static propTypes = {
     children: PropTypes.string.isRequired,
     form: PropTypes.object,
-    onPress: PropTypes.func,
+    onSubmit: PropTypes.func,
   };
   static contextTypes = {
     form: PropTypes.object,
@@ -46,6 +46,6 @@ export default class Submit extends Component {
       >
         <Text>{children}</Text>
       </TouchableOpacity>
-    )
+    );
   }
 }

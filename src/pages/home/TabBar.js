@@ -3,7 +3,6 @@
  */
 
 import React, { PropTypes, Component } from 'react';
-import {Router} from 'react-router';
 import {
   View,
   TouchableOpacity,
@@ -34,15 +33,13 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-export default class TabBar extends React.Component {
+export default class TabBar extends Component {
   static contextTypes = {
     navigator: PropTypes.object,
   };
   goto(location) {
     const { navigator } = this.context;
-    navigator.replace({location});
+    navigator.replace({ location });
   }
   renderItem(to, label) {
     const { router } = this.props;
@@ -54,7 +51,7 @@ export default class TabBar extends React.Component {
     );
   }
   render() {
-    const {children, router: _, ...others} = this.props;
+    const { children, router: _, ...others } = this.props;
     console.log(others);
     return (
       <View style={styles.container}>
@@ -73,5 +70,7 @@ export default class TabBar extends React.Component {
 
 TabBar.propTypes = {
   children: PropTypes.element,
-  router: PropTypes.object,
+  router: PropTypes.shapeOf({
+    isActive: PropTypes.func,
+  }),
 };

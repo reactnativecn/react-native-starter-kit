@@ -5,7 +5,7 @@
 import { observable } from 'mobx';
 import validate from 'mobx-form-validate';
 import { md5b64 } from '../utils/md5';
-import { post } from './rpc';
+import { post, saveToken } from './rpc';
 
 export class LoginForm {
   @observable
@@ -17,14 +17,13 @@ export class LoginForm {
   pwd = '';
 
   async submit() {
-    if (false) {
-      const { token, uid } = await post('/login', {
+    if (!__DEV__) {
+      const { token } = await post('/login', {
         user: this.user,
         pwd: md5b64(this.pwd),
       });
-
+      saveToken(token);
     }
-    return 1;
   }
 }
 
@@ -42,12 +41,12 @@ export class RegisterForm {
   pwdrpt = '';
 
   async submit() {
-    if (false) {
-      await post('/register', {
+    if (!__DEV__) {
+      const { token } = await post('/register', {
         user: this.user,
         pwd: md5b64(this.pwd),
       });
+      saveToken(token);
     }
-    return 1;
   }
 }
