@@ -17,6 +17,10 @@ export default function router(path) {
       onEnter: target.onEnter && wrapOnEnter(target.onEnter),
       childRoutes: target.childRoutes && target.childRoutes.map(v => v.routeConfig || v),
       indexRoute: target.indexRoute && (target.indexRoute.routeConfig || target.indexRoute),
+      title: target.title,
+      hideNavBar: target.hideNavBar,
+      leftNavTitle: target.leftNavTitle,
+      rightNavTitle: target.rightNavTitle,
     };
   };
 }

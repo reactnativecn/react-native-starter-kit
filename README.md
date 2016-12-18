@@ -127,3 +127,57 @@ export const routeConfig = {
 ## TabBar的实现
 
 TabBar采用react-router直接实现,不依赖第三方组件。
+
+## 导航条控制
+
+导航条自动在每个界面都被包含,导航条如果出现的页面并非路由栈底部,将会自动出现返回按钮。
+
+你可以通过在页面的routeConfig(或通过页面静态成员)的一些属性来控制导航条:
+
+* `hideNavBar`: 在此界面下将隐藏导航条
+* `title`: 控制导航条的标题显示
+* `leftNavTitle`: 导航条左侧显示的标题,如"返回"等
+* `rightNavTitle`: 导航条右侧显示的标题,如"筛选"等
+* 更多属性添加中。。
+
+你可以在组件里实现以下两个方法来获取导航条的相关通知:
+
+* `onLeftPressed` 当导航条返回按钮或左侧标题被点击的时候调用
+* `onRightPressed` 当导航条右侧标题被点击的时候调用
+
+## 加载更多列表
+
+使用`PageList`作为对应的observable,很容易就可以实现加载更多的列表:
+
+可以修改PageList以适应你的前后端接口方式(包括对isOver的判定)
+
+```javascript
+@route('home')
+@observer
+export default class Home extends Component {
+  @observable
+  articleList = new PageList('/article/list');
+  
+  fetchMore = () => {
+    this.articleList.fetch();
+  };
+  
+  renderRow = row => {
+    return (
+      <ArticleItem data={row} key={row.id} />
+    );
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.articleList.dataSource}
+          renderRow={this.renderRow}
+          onEndReached={this.fetchMore}
+        />
+      </View>
+    );
+  }
+}
+
+```

@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 
 @router('splash')
 export default class Splash extends Component {
+  static hideNavBar = true;
   static contextTypes = {
     navigator: PropTypes.object,
   };
