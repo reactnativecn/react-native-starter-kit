@@ -1,7 +1,7 @@
 /**
  * Created by tdzl2003 on 12/18/16.
  */
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import {
   View,
@@ -10,6 +10,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import backImage from './assets/back.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,15 +53,9 @@ export default class NavBar extends Component {
     navigator: PropTypes.object,
     currentRoute: PropTypes.object,
   };
-  renderBack() {
-    return (
-      <TouchableOpacity style={styles.left} onPress={this.onLeftPressed}>
-        <Image source={require('./assets/back.png')} />
-      </TouchableOpacity>
-    );
-  }
-  getRef = ref => {
-    this.childrenRef = ref;
+  static propTypes = {
+    children: PropTypes.element,
+    routes: PropTypes.arrayOf(PropTypes.object),
   };
   onLeftPressed = () => {
     if (this.childrenRef && this.childrenRef.onLeftPressed) {
@@ -74,14 +69,24 @@ export default class NavBar extends Component {
       this.childrenRef.onRightPressed();
     }
   };
+  getRef = (ref) => {
+    this.childrenRef = ref;
+  };
+  renderBack() {
+    return (
+      <TouchableOpacity style={styles.left} onPress={this.onLeftPressed}>
+        <Image source={backImage} />
+      </TouchableOpacity>
+    );
+  }
   render() {
-    const {route, children, routes} = this.props;
+    const { children, routes } = this.props;
     const routeConfig = routes[routes.length - 1] || {};
 
-    const {navigator, currentRoute} = this.context;
+    const { navigator, currentRoute } = this.context;
     const currentIndex = navigator.getCurrentRoutes().indexOf(currentRoute);
 
-    const {leftNavTitle: left, rightNavTitle: right} = routeConfig;
+    const { leftNavTitle: left, rightNavTitle: right } = routeConfig;
 
     return (
       <View style={styles.container}>
@@ -90,8 +95,16 @@ export default class NavBar extends Component {
             <View style={styles.navBar}>
               <Text style={styles.title}>{routeConfig.title}</Text>
               { currentIndex > 0 && !left && this.renderBack() }
-              { left && <TouchableOpacity style={styles.left} onPress={this.onLeftPressed}><Text style={styles.button}>{left}</Text></TouchableOpacity> }
-              { right && <TouchableOpacity style={styles.right} onPress={this.onRightPressed}><Text style={styles.button}>{right}</Text></TouchableOpacity> }
+              {
+                left && <TouchableOpacity style={styles.left} onPress={this.onLeftPressed}>
+                  <Text style={styles.button}>{left}</Text>
+                </TouchableOpacity>
+              }
+              {
+                right && <TouchableOpacity style={styles.right} onPress={this.onRightPressed}>
+                  <Text style={styles.button}>{right}</Text>
+                </TouchableOpacity>
+              }
             </View>
         }
         {React.cloneElement(children, { ref: this.getRef })}
