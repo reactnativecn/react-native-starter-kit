@@ -17,7 +17,7 @@ export class LoginForm {
   pwd = '';
 
   async submit() {
-    if (!__DEV__) {
+    if (false) {
       const { token } = await post('/login', {
         user: this.user,
         pwd: md5b64(this.pwd),
@@ -41,7 +41,7 @@ export class RegisterForm {
   pwdrpt = '';
 
   async submit() {
-    if (!__DEV__) {
+    if (false) {
       const { token } = await post('/register', {
         user: this.user,
         pwd: md5b64(this.pwd),
