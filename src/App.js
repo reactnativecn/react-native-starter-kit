@@ -75,11 +75,12 @@ export default class App extends Component {
       }]);
     }
   };
-  renderScene = ({ location, passProps, component: Comp } = {}, navigator) => {
+  renderScene = (currentRoute, navigator) => {
+    const { location, passProps, component: Comp } = currentRoute || 0;
     if (location) {
       // 通过location渲染页面
       return (
-        <NavigatorProvider navigator={navigator}>
+        <NavigatorProvider navigator={navigator} currentRoute={currentRoute}>
           <RouterContainer
             routeConfig={routeConfig}
             passProps={passProps}

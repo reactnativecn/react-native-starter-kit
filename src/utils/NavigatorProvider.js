@@ -11,6 +11,7 @@ import {
 export default class NavigatorProvider extends React.Component {
   static propTypes = {
     navigator: PropTypes.instanceOf(Navigator),
+    currentRoute: PropTypes.object,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element,
@@ -18,11 +19,13 @@ export default class NavigatorProvider extends React.Component {
   }
   static childContextTypes = {
     navigator: PropTypes.instanceOf(Navigator),
+    currentRoute: PropTypes.object,
   };
 
   getChildContext() {
     return {
       navigator: this.props.navigator,
+      currentRoute: this.props.currentRoute,
     };
   }
 
