@@ -78,6 +78,12 @@ export default class App extends Component {
       }]);
     }
   };
+  onNavigatorRef = (ref) => {
+    this.navigator = ref;
+    if (ref) {
+      hookNavigator(ref);
+    }
+  };
   renderScene = (currentRoute, navigator) => {
     const { location, passProps, component: Comp } = currentRoute || 0;
     if (location) {
@@ -100,12 +106,6 @@ export default class App extends Component {
       );
     }
     return null;
-  };
-  onNavigatorRef = (ref) => {
-    this.navigator = ref;
-    if (ref) {
-      hookNavigator(ref);
-    }
   };
   render() {
     return (
