@@ -41,6 +41,9 @@ export default class App extends Component {
   lastAppState = 'active';
   onHardwareBackPress = () => {
     const nav = this.navigator;
+    if (!nav) {
+      return false;
+    }
     const routers = nav.getCurrentRoutes();
 
     if (routers.length > 1) {
@@ -98,6 +101,12 @@ export default class App extends Component {
     }
     return null;
   };
+  onNavigatorRef = (ref) => {
+    this.navigator = ref;
+    if (ref) {
+      hookNavigator(ref);
+    }
+  };
   render() {
     return (
       <View style={styles.root}>
@@ -109,10 +118,7 @@ export default class App extends Component {
           onWillFocus={this.onWillFocus}
           initialRoute={INITIAL_ROUTE}
           renderScene={this.renderScene}
-          ref={(ref) => {
-            this.navigator = ref;
-            hookNavigator(ref);
-          }}
+          ref={this.onNavigatorRef}
         />
       </View>
     );
