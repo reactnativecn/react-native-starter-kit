@@ -31,16 +31,18 @@ const styles = StyleSheet.create({
   left: {
     position: 'absolute',
     top: __IOS__ ? 20 : 0,
-    left: 15,
+    left: 0,
     bottom: 0,
     justifyContent: 'center',
+    paddingHorizontal: 15,
   },
   right: {
     position: 'absolute',
     top: __IOS__ ? 20 : 0,
-    right: 15,
+    right: 0,
     bottom: 0,
     justifyContent: 'center',
+    paddingHorizontal: 15,
   },
   button: {
     color: 'white',
@@ -93,7 +95,7 @@ export default class NavBar extends Component {
         {
           !routeConfig.hideNavBar &&
             <View style={styles.navBar}>
-              <Text style={styles.title}>{routeConfig.title}</Text>
+              <Text style={styles.title} numberOfLines={1}>{routeConfig.title}</Text>
               { currentIndex > 0 && !left && this.renderBack() }
               {
                 left && <TouchableOpacity style={styles.left} onPress={this.onLeftPressed}>
