@@ -36,6 +36,13 @@
       ]
     }],
 
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+
     // Disable rules for most usage in react-native.
     "react/jsx-filename-extension": 0
   },
