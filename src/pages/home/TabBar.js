@@ -37,6 +37,7 @@ export default class TabBar extends Component {
   static contextTypes = {
     navigator: PropTypes.object,
   };
+
   goto(location) {
     const { navigator } = this.context;
     navigator.replace({ location });
@@ -50,13 +51,25 @@ export default class TabBar extends Component {
       </TouchableOpacity>
     );
   }
+  onLeftPressed() {
+    if (this.childrenRef && this.childrenRef.onLeftPressed) {
+      this.childrenRef.onLeftPressed();
+    }
+  }
+  onRightPressed() {
+    if (this.childrenRef && this.childrenRef.onRightPressed) {
+      this.childrenRef.onRightPressed();
+    }
+  }
+  getRef = (ref) => {
+    this.childrenRef = ref;
+  };
   render() {
     const { children, router: _, ...others } = this.props;
-    console.log(others);
     return (
       <View style={styles.container}>
         <View style={styles.content}>
-          {children}
+          {React.cloneElement(children, { ref: this.getRef })}
         </View>
         <View style={styles.tabBar}>
           {this.renderItem('/home/home', '首页')}
