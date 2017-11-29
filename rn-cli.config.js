@@ -8,6 +8,18 @@ const config = {
     'tslib': require.resolve('tslib/tslib.es6.js'),
   },
 
+  getPlatforms() {
+    return ['web'];
+  },
+
+  getProvidesModuleNodeModules() {
+    return [
+      'react-native',
+      'react-native-windows',
+      'react-native-web-platform',
+    ];
+  },
+
   getBlacklistRE() {
     return blacklist([
       /\.idea[\/\\].*/,

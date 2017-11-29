@@ -6,4 +6,13 @@ for (const key of Object.keys(tslib)) {
   }
 }
 
+if (!__DEV__) {
+  global.console = {
+    info: () => {},
+    log: () => {},
+    warn: () => {},
+    error: () => {},
+  };
+}
+
 require('./src');

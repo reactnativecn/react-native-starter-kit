@@ -1,15 +1,6 @@
 import {
-  View,
   AppRegistry,
 } from 'react-native';
+import App from './App';
 
-function bar(clz: any) {
-
-}
-
-@bar
-class Foo {
-
-}
-
-AppRegistry.registerComponent('App', () => View);
+AppRegistry.registerComponent('App', () => App);
