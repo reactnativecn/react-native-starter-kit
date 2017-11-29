@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "jsx": "react",
+    "strict": true,
+    "noImplicitAny": true,
+    "noEmitHelpers": true,
+    "experimentalDecorators": true,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "lib": [
+      "es5",
+      "es6",
+      "es2015",
+      "DOM"
+    ]
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
+}
