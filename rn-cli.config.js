@@ -15,8 +15,8 @@ const config = {
   getProvidesModuleNodeModules() {
     return [
       'react-native',
-      'react-native-windows',
       'react-native-web-platform',
+      'react-native-windows',
     ];
   },
 
