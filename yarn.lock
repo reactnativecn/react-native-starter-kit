@@ -2743,9 +2743,9 @@ metro-bundler@^0.20.1:
     write-file-atomic "^1.2.0"
     xpipe "^1.0.5"
 
-metro-transformer-registry@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/metro-transformer-registry/-/metro-transformer-registry-1.0.3.tgz#f300a62c066bd2cb0c1ba54b96d6410c7599a592"
+metro-transformer-registry@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/metro-transformer-registry/-/metro-transformer-registry-1.0.4.tgz#7984029daaf131dc90e5717555727f9f855fb94c"
 
 micromatch@^2.1.5, micromatch@^2.3.11:
   version "2.3.11"
@@ -3310,9 +3310,9 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-web-platform@0.1.21:
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/react-native-web-platform/-/react-native-web-platform-0.1.21.tgz#f4f4bb0139f5571056b0203083cc10e864a5ef8e"
+react-native-web-platform@0.1.22:
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/react-native-web-platform/-/react-native-web-platform-0.1.22.tgz#31c103cf354d8ad4f5dc85ad7fca76e12574fbe4"
   dependencies:
     create-react-class "^15.6.0"
     es6-promise "^4.1.0"
