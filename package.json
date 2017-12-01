@@ -9,10 +9,10 @@
 	"dependencies": {
 		"@types/react": "^16.0.25",
 		"@types/react-native": "^0.50.7",
-		"metro-transformer-registry": "1.0.2",
+		"metro-transformer-registry": "1.0.3",
 		"react": "16.0.0",
 		"react-native": "0.50.4",
-		"react-native-web-platform": "0.1.18",
+		"react-native-web-platform": "0.1.21",
 		"tslib": "^1.8.0"
 	},
 	"devDependencies": {

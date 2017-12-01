@@ -2,7 +2,7 @@ const { Bridge } = require('react-native-web-platform/lib/launch');
 
 const bridge = new Bridge(
   __DEV__ ?
-    './index.bundle?platform=web':
+    './index.bundle?platform=web&dev=true':
     './index.bundle.js'
 )
 
