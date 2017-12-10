@@ -5,9 +5,16 @@ import { NavigationScreenProps } from 'react-navigation';
 import { autoFlow } from '../utils/autoFlow';
 import { SagaIterator } from 'redux-saga';
 import { connect } from 'react-redux';
-import { take } from 'redux-saga/effects';
+import { take, call, setContext } from 'redux-saga/effects';
+import { takeInScreen } from '../utils/screenAction';
+import { Action } from 'redux';
 
-type PropType = NavigationScreenProps<void>;
+interface SplashParam{
+  counter: number;
+};
+
+type PropType = NavigationScreenProps<SplashParam>;
+
 
 @autoFlow
 export default class Splash extends React.Component<PropType> {
@@ -15,12 +22,12 @@ export default class Splash extends React.Component<PropType> {
       header: null,
   };
 
-  static *flow(props: PropType): SagaIterator {
-    console.log(`I'm Here! ${props.navigation.state.key}`);
-    for (;;) {
-      const a = yield take();
-      console.log(`I'm Here! ${props.navigation.state.key}`);
-    }
+  static reducer(state: SplashParam, action: Action): SplashParam {
+    return state;
+  }
+
+  static *flow(): SagaIterator {
+    yield takeInScreen();
   }
 
   onPress = () => {
