@@ -7,8 +7,8 @@ import { call, setContext } from "redux-saga/effects";
 export function autoFlow(component: any) {
   const { flow } = component;
 
-  function *main(navKey: string) {
-    yield setContext({ navKey });
+  function *main(screenKey: string) {
+    yield setContext({ screenKey });
     yield call(flow);
   }
 

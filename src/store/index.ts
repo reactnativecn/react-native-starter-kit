@@ -8,16 +8,19 @@ import { AppNavigator } from '../screens';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import main from '../sagas/index';
+import { screenReducerFactory } from '../utils/screenAction';
 
 const StoreRecord = Record({
   navigation: null,
 });
 
+const screenReducer = screenReducerFactory(AppNavigator);
+
 export class StoreState extends StoreRecord {
   navigation: NavigationState;
 
   static reducer = combineReducers({
-    navigation: (state, action) => AppNavigator.router.getStateForAction(action, state) || state,
+    navigation: (state, action) => screenReducer(AppNavigator.router.getStateForAction(action, state) || state, action),
   });
 };
 
