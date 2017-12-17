@@ -7,7 +7,7 @@ import {
 import { AppNavigator } from '../screens';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import main from '../sagas/index';
+import { mainFlow } from '../sagas/index';
 import { screenReducerFactory } from '../utils/screenAction';
 
 const StoreRecord = Record({
@@ -42,6 +42,6 @@ const store = createStore(
   ),
 );
 
-sagaMiddleware.run(main);
+sagaMiddleware.run(mainFlow);
 
 export default store;

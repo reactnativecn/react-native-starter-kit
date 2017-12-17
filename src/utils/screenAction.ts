@@ -55,27 +55,29 @@ function inScreenRule(key: string, rule?: Pattern): Pattern {
       return (action: ScreenAction) => action.screenKey === key && (rule as Predicate<Action>)(action);
     }
   }
-  return (action: ScreenAction) => action.screenKey === key && action.type === rule;
+  return (action: ScreenAction) => {
+    return action.screenKey === key && action.type === rule;
+  };
 }
 
 export function takeInScreen(rule?: Pattern) {
   return call(function* (): SagaIterator {
     const key = yield getContext('screenKey');
-    return take(inScreenRule(key, rule));
+    return yield take(inScreenRule(key, rule));
   })
 }
 
 export function takeEveryInScreen(rule: Pattern, worker: any, ...args: any[]) {
   return call(function* (): SagaIterator {
     const key = yield getContext('screenKey');
-    return takeEvery(inScreenRule(key, rule), worker, ...args);
+    return yield takeEvery(inScreenRule(key, rule), worker, ...args);
   })
 }
 
 export function takeLatestInScreen(rule: Pattern, worker: any, ...args: any[]) {
   return call(function* (): SagaIterator {
     const key = yield getContext('screenKey');
-    return takeLatest(inScreenRule(key, rule), worker, ...args);
+    return yield takeLatest(inScreenRule(key, rule), worker, ...args);
   })
 }
 
