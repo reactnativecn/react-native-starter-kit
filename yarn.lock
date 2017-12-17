@@ -8,13 +8,7 @@
   dependencies:
     immutable "*"
 
-"@types/react-native@*":
-  version "0.51.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.51.0.tgz#322caad4224c258365a5afb17d8669939ee6d074"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-native@^0.50.7":
+"@types/react-native@*", "@types/react-native@^0.50.7":
   version "0.50.7"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.50.7.tgz#4c18bb14aa08f11934f539d2b8dcb2f1a6b88bd8"
   dependencies:

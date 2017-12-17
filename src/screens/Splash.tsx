@@ -6,10 +6,11 @@ import { autoFlow } from '../utils/autoFlow';
 import { SagaIterator } from 'redux-saga';
 import { connect } from 'react-redux';
 import { take, call, setContext } from 'redux-saga/effects';
-import { takeInScreen, putInScreen, connectScreen } from '../utils/screenAction';
+import { takeInScreen, putInScreen, connectScreen, ScreenProps } from '../utils/screenAction';
 import { Action, ActionCreator } from 'redux';
 
 import { handleActions, combineActions, createAction } from 'redux-actions';
+import { ComponentClass } from 'react';
 
 
 interface SplashParam{
@@ -19,10 +20,10 @@ interface SplashParam{
 const foo = createAction('FOO');
 const bar = createAction('BAR');
 
-type PropType = NavigationScreenProps<SplashParam> & ({foo: typeof foo, bar: typeof bar});
+type PropType = NavigationScreenProps<SplashParam> & ({foo: typeof foo, bar: typeof bar}) & ScreenProps<SplashParam>;
 
 @autoFlow
-class Splash extends React.Component<any> {
+class Splash extends React.Component<PropType> {
   static navigationOptions = {
       header: null,
   };
