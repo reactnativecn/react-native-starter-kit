@@ -29,14 +29,16 @@ export function bindSubmit<T>(component: ComponentType<T & {
   disabled?: boolean,
 }>) : ComponentType<T & {
   form: any,
+  disabled?: boolean,
 }> {
   const Button: any = component;
   return observer(function BindingSubmit({
     form,
+    disabled,
     ...props,
   }: any) {
     return (
-      <Button {...props} disabled={!form.isValid} />
+      <Button {...props} disabled={disabled && !form.isValid} />
     )
   });
 }
