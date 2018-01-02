@@ -38,6 +38,7 @@
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
 		"jest": "21.2.1",
+		"prettier": "1.9.2",
 		"react-test-renderer": "16.0.0",
 		"source-map": "^0.6.1",
 		"typescript": "^2.6.1"
