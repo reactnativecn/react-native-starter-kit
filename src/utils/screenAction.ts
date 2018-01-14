@@ -112,7 +112,7 @@ function mapStateReducer(state: any, action: ScreenAction, root: NavigationCompo
 
   if (state.key !== action.screenKey) {
     // Not this page.
-    return;
+    return state;
   }
 
   const comp = root as any as { reducer?: Reducer<any> };
