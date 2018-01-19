@@ -1,6 +1,6 @@
-import { Record } from 'immutable';
+import { Record, Map } from 'immutable';
 import { createStore, applyMiddleware, Middleware } from 'redux';
-import { NavigationActions, NavigationDispatch, NavigationState } from "react-navigation";
+import { NavigationAction, NavigationActions, NavigationDispatch, NavigationState } from "react-navigation";
 import {
   combineReducers,
 } from 'redux-immutable';
@@ -8,19 +8,20 @@ import { AppNavigator } from '../screens';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { mainFlow } from '../sagas/index';
-import { screenReducerFactory } from '../utils/screenAction';
+import widgetStateReducer from './widgetState';
 
 const StoreRecord = Record({
   navigation: null,
+  widgetState: Map(),
 });
-
-const screenReducer = screenReducerFactory(AppNavigator);
 
 export class StoreState extends StoreRecord {
   navigation: NavigationState;
+  widgetState: Map<string, any>;
 
   static reducer = combineReducers({
-    navigation: (state, action) => screenReducer(AppNavigator.router.getStateForAction(action, state) || state, action),
+    navigation: (state: NavigationState, action: NavigationAction) => AppNavigator.router.getStateForAction(action, state),
+    widgetState: widgetStateReducer,
   });
 };
 
