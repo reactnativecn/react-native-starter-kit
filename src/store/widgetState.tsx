@@ -5,6 +5,7 @@ import { sagaMiddleware } from './index';
 import { Map } from 'immutable';
 import { Task, Pattern, Predicate } from 'redux-saga';
 import { call, setContext, getContext, put, take, takeEvery, takeLatest } from 'redux-saga/effects';
+import hoistStatics = require('hoist-non-react-statics');
 
 let idCounter = 0;
 function genKey(name: string) {
@@ -37,7 +38,7 @@ function mapStateToProps(state: StoreStateInterface, { widgetKey }: { widgetKey:
 export type ActionMap = { [key: string]: Action<any> };
 
 function mapDispatchToProps<ActionMapType>(actions: ActionMapType) {
-  return function<StoreState extends StoreStateInterface>(
+  return function <StoreState extends StoreStateInterface>(
     dispatch: Dispatch<StoreState>,
     { widgetKey }: { widgetKey: string },
   ): ActionMapType {
@@ -60,7 +61,7 @@ export const init = createAction(INIT);
 export const UNLOAD = '@@Widget/UNLOAD';
 export const unload = createAction(UNLOAD);
 
-type Diff<T extends string, U extends string> = ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T];
+type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
 type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 
 // 用来包装一个widget，替代connect，并提供widgetKey和widgetState属性。
@@ -71,7 +72,7 @@ export function widget<TActions = {}, WidgetState = {}>(
   saga: (() => Iterator<any>) | undefined = undefined,
 ) {
   type TInjectedProps = TActions & WidgetProps<WidgetState> & DispatchProp<any>;
-  return function<P extends TInjectedProps>(Comp: React.ComponentType<P>) {
+  return function <P extends TInjectedProps>(Comp: React.ComponentType<P>) {
     type TNeedsProps = Omit<P, keyof TInjectedProps>;
     const name = (Comp as any).displayName || (Comp as any).name;
     if (!name) {
@@ -83,6 +84,7 @@ export function widget<TActions = {}, WidgetState = {}>(
     const Wrapped = class WrappedWidget extends React.Component<TNeedsProps> {
       widgetKey = genKey(name);
       task: Task | null = null;
+
       constructor(props: TNeedsProps) {
         super(props);
         widgetInstanceType[this.widgetKey] = reducer;
@@ -95,7 +97,7 @@ export function widget<TActions = {}, WidgetState = {}>(
         if (saga) {
           const { dispatch } = this.props;
           const { widgetKey } = this;
-          this.task = sagaMiddleware.run(function*() {
+          this.task = sagaMiddleware.run(function* () {
             yield setContext({ widgetKey });
             yield call(saga);
           });
@@ -117,7 +119,9 @@ export function widget<TActions = {}, WidgetState = {}>(
       }
     };
 
-    return connect()(Wrapped);
+    const ret = connect()(Wrapped);
+    hoistStatics(ret, Comp as any);
+    return ret;
   };
 }
 
@@ -155,28 +159,28 @@ function localRule(key: string, rule?: Pattern): Pattern {
 }
 
 export function takeInWidget(rule?: Pattern) {
-  return call(function*() {
+  return call(function* () {
     const key = yield getContext('widgetKey');
     return yield take(localRule(key, rule));
   });
 }
 
 export function takeEveryInWidget(rule: Pattern, worker: any, ...args: any[]) {
-  return call(function*() {
+  return call(function* () {
     const key = yield getContext('widgetKey');
     return yield takeEvery(localRule(key, rule), worker, ...args);
   });
 }
 
 export function takeLatestInWidget(rule: Pattern, worker: any, ...args: any[]) {
-  return call(function*() {
+  return call(function* () {
     const key = yield getContext('widgetKey');
     return yield takeLatest(localRule(key, rule), worker, ...args);
   });
 }
 
 export function putInWidget<Payload>(action: Action<Payload>) {
-  return call(function*() {
+  return call(function* () {
     const widgetKey = yield getContext('widgetKey');
     return yield put({ ...action, widgetKey });
   });
