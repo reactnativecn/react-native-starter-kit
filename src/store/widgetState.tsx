@@ -60,60 +60,65 @@ export const init = createAction(INIT);
 export const UNLOAD = '@@Widget/UNLOAD';
 export const unload = createAction(UNLOAD);
 
+type Diff<T extends string, U extends string> = ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T];
+type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
+
 // 用来包装一个widget，替代connect，并提供widgetKey和widgetState属性。
 // actions 可以包含local actions或全局actions，但发出的action都会有widgetKey字段。
-export function widget<TActions = {}, TOwnProps = {}, WidgetState = {}>(
-  Comp: React.ComponentType<TActions & TOwnProps & WidgetProps<WidgetState> & DispatchProp<any>>,
+export function widget<TActions = {}, WidgetState = {}>(
   reducer: Reducer<WidgetState, any> = noop,
   actions: TActions = {} as TActions,
   saga: (() => Iterator<any>) | undefined = undefined,
 ) {
-  const name = (Comp as any).displayName || (Comp as any).name;
-  if (!name) {
-    throw new Error('Component must have a name');
-  }
-
-  // TODO: 此处的any为非预期，尚未找到正确的标注方式。
-  const ConnectedComp = connect(mapStateToProps, mapDispatchToProps(actions))(Comp as any);
-
-  const Wrapped = class WrappedWidget extends React.Component<TOwnProps & DispatchProp<any>> {
-    widgetKey = genKey(name);
-    task: Task | null = null;
-    constructor(props: TOwnProps) {
-      super(props);
-      widgetInstanceType[this.widgetKey] = reducer;
+  type TInjectedProps = TActions & WidgetProps<WidgetState> & DispatchProp<any>;
+  return function<P extends TInjectedProps>(Comp: React.ComponentType<P>) {
+    type TNeedsProps = Omit<P, keyof TInjectedProps>;
+    const name = (Comp as any).displayName || (Comp as any).name;
+    if (!name) {
+      throw new Error('Component must have a name');
     }
-    componentWillMount() {
-      const { dispatch } = this.props;
-      if (dispatch) {
-        dispatch({ ...init(), widgetKey: this.widgetKey });
+
+    const ConnectedComp = connect(mapStateToProps, mapDispatchToProps(actions))(Comp);
+
+    const Wrapped = class WrappedWidget extends React.Component<TNeedsProps> {
+      widgetKey = genKey(name);
+      task: Task | null = null;
+      constructor(props: TNeedsProps) {
+        super(props);
+        widgetInstanceType[this.widgetKey] = reducer;
       }
-      if (saga) {
+      componentWillMount() {
         const { dispatch } = this.props;
-        const { widgetKey } = this;
-        this.task = sagaMiddleware.run(function*() {
-          yield setContext({ widgetKey });
-          yield call(saga);
-        });
+        if (dispatch) {
+          dispatch({ ...init(), widgetKey: this.widgetKey });
+        }
+        if (saga) {
+          const { dispatch } = this.props;
+          const { widgetKey } = this;
+          this.task = sagaMiddleware.run(function*() {
+            yield setContext({ widgetKey });
+            yield call(saga);
+          });
+        }
       }
-    }
-    componentWillUnmount() {
-      const { dispatch } = this.props;
-      if (dispatch) {
-        dispatch({ ...unload(), widgetKey: this.widgetKey });
+      componentWillUnmount() {
+        const { dispatch } = this.props;
+        if (dispatch) {
+          dispatch({ ...unload(), widgetKey: this.widgetKey });
+        }
+        delete widgetInstanceType[this.widgetKey];
+        if (this.task) {
+          this.task.cancel();
+        }
       }
-      delete widgetInstanceType[this.widgetKey];
-      if (this.task) {
-        this.task.cancel();
+      render() {
+        const { dispatch, ...others } = this.props as any;
+        return <ConnectedComp {...others} widgetKey={this.widgetKey} />;
       }
-    }
-    render() {
-      const { dispatch, ...others } = this.props as any;
-      return <ConnectedComp {...others} widgetKey={this.widgetKey} />;
-    }
-  };
+    };
 
-  return connect()(Wrapped);
+    return connect()(Wrapped);
+  };
 }
 
 // 核心reducer，用来清空移除的widget或分发事件到对应的reducer

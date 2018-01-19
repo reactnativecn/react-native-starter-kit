@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles = require('./Splash.style');
 import { NavigationScreenProps } from 'react-navigation';
 import { SagaIterator } from 'redux-saga';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { take, call, setContext } from 'redux-saga/effects';
 import { Action, ActionCreator } from 'redux';
 
